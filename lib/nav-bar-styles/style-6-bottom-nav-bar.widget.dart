@@ -32,7 +32,7 @@ class _BottomNavStyle6State extends State<BottomNavStyle6>
       _animationControllerList.add(AnimationController(
           duration:
               widget.navBarEssentials!.itemAnimationProperties?.duration ??
-                  Duration(milliseconds: 400),
+                  Duration(milliseconds: 10),
           vsync: this));
       _animationList.add(Tween(begin: 0.95, end: 1.18)
           .chain(CurveTween(
@@ -50,72 +50,77 @@ class _BottomNavStyle6State extends State<BottomNavStyle6>
       double? height, int itemIndex) {
     return widget.navBarEssentials!.navBarHeight == 0
         ? SizedBox.shrink()
-        : AnimatedBuilder(
-            animation: _animationList[itemIndex],
-            builder: (context, child) => Transform.scale(
-              scale: _animationList[itemIndex].value,
+        : Container(
+      width: 150.0,
+      height: height,
+      child: Container(
+        alignment: Alignment.center,
+        height: height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child:
+              // Image.asset(
+              //   item.ImgPath,
+              //     color: isSelected
+              //             ? (item.activeColorSecondary == null
+              //                 ? item.activeColorPrimary
+              //                 : item.activeColorSecondary)
+              //             : item.inactiveColorPrimary == null
+              //                 ? item.activeColorPrimary
+              //                 : item.inactiveColorPrimary,
+              //
+              // ),
+              IconTheme(
+                data: IconThemeData(
+                    size: item.iconSize,
+                    color: isSelected
+                        ? (item.activeColorSecondary == null
+                        ? item.activeColorPrimary
+                        : item.activeColorSecondary)
+                        : item.inactiveColorPrimary == null
+                        ? item.activeColorPrimary
+                        : item.inactiveColorPrimary),
+                child: isSelected
+                    ? item.icon
+                    : item.inactiveIcon ?? item.icon,
+              ),
+            ),
+            item.title == null
+                ? SizedBox.shrink()
+                : Material(
+              type: MaterialType.transparency,
               child: Container(
-                width: 150.0,
-                height: height,
-                child: Container(
-                  alignment: Alignment.center,
-                  height: height,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Expanded(
-                        child: IconTheme(
-                          data: IconThemeData(
-                              size: item.iconSize,
-                              color: isSelected
-                                  ? (item.activeColorSecondary == null
-                                      ? item.activeColorPrimary
-                                      : item.activeColorSecondary)
-                                  : item.inactiveColorPrimary == null
-                                      ? item.activeColorPrimary
-                                      : item.inactiveColorPrimary),
-                          child: isSelected
-                              ? item.icon
-                              : item.inactiveIcon ?? item.icon,
-                        ),
-                      ),
-                      item.title == null
-                          ? SizedBox.shrink()
-                          : Padding(
-                              padding: const EdgeInsets.only(top: 15.0),
-                              child: Material(
-                                type: MaterialType.transparency,
-                                child: FittedBox(
-                                  child: Text(
-                                    item.title!,
-                                    style: item.textStyle != null
-                                        ? (item.textStyle!.apply(
-                                            color: isSelected
-                                                ? (item.activeColorSecondary ==
-                                                        null
-                                                    ? item.activeColorPrimary
-                                                    : item.activeColorSecondary)
-                                                : item.inactiveColorPrimary))
-                                        : TextStyle(
-                                            color: isSelected
-                                                ? (item.activeColorSecondary ==
-                                                        null
-                                                    ? item.activeColorPrimary
-                                                    : item.activeColorSecondary)
-                                                : item.inactiveColorPrimary,
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 12.0),
-                                  ),
-                                ),
-                              ),
-                            ),
-                    ],
-                  ),
+                margin: EdgeInsets.only(top: 4.33),
+                child: Text(
+                  item.title!,
+                  style: item.textStyle != null
+                      ? (item.textStyle!.apply(
+                    color: isSelected
+                        ? (item.activeColorSecondary ==
+                        null
+                        ? item.activeColorPrimary
+                        : item.activeColorSecondary)
+                        : item.inactiveColorPrimary,)
+                  )
+                      : TextStyle(
+                      color: isSelected
+                          ? (item.activeColorSecondary ==
+                          null
+                          ? item.activeColorPrimary
+                          : item.activeColorSecondary)
+                          : item.inactiveColorPrimary,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12.0),
                 ),
               ),
             ),
-          );
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -156,14 +161,13 @@ class _BottomNavStyle6State extends State<BottomNavStyle6>
     }
     return Container(
       width: double.infinity,
-      height: widget.navBarEssentials!.navBarHeight,
+      height: 60.0,
       padding: EdgeInsets.only(
           left: widget.navBarEssentials!.padding?.left ??
               MediaQuery.of(context).size.width * 0.04,
           right: widget.navBarEssentials!.padding?.right ??
               MediaQuery.of(context).size.width * 0.04,
-          top: widget.navBarEssentials!.padding?.top ??
-              widget.navBarEssentials!.navBarHeight! * 0.15,
+          top: 10,
           bottom: widget.navBarEssentials!.padding?.bottom ??
               widget.navBarEssentials!.navBarHeight! * 0.12),
       child: Row(
